@@ -1,0 +1,21 @@
+{
+	"configen": {
+		"version": "4",
+		"sources": [
+			{
+				"id": "main",
+				"path": "app",
+				"r": true
+			}
+		],
+		"destinations": [
+			{
+				"id": "main",
+				"path": "gen/gen4webapid",
+				"sources": [
+					"main"
+				]
+			}
+		]
+	}
+}
