@@ -32,6 +32,7 @@ func (inst*autoRegistrar) addAll() error {
     
     inst.register(&pe8d8413902_controllers_ExampleController{})
     inst.register(&pe8d8413902_controllers_NamespaceController{})
+    inst.register(&pe8d8413902_controllers_SchemaController{})
     inst.register(&pe8d8413902_controllers_ServiceController{})
 
 

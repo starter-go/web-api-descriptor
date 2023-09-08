@@ -32,7 +32,7 @@ func (inst *ServiceController) Registration() *libgin.ControllerRegistration {
 
 func (inst *ServiceController) route(g *gin.RouterGroup) error {
 
-	g = g.Group("services")
+	g = makeGroupFor(g, "services")
 
 	// g.POST("", inst.handle)
 	// g.DELETE(":id", inst.handle)

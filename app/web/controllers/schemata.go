@@ -9,8 +9,8 @@ import (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// NamespaceController ...
-type NamespaceController struct {
+// SchemaController ...
+type SchemaController struct {
 
 	//starter:component
 	_as func(libgin.Controller) //starter:as(".")
@@ -19,20 +19,20 @@ type NamespaceController struct {
 
 }
 
-func (inst *NamespaceController) _impl() libgin.Controller {
+func (inst *SchemaController) _impl() libgin.Controller {
 	return inst
 }
 
 // Registration ...
-func (inst *NamespaceController) Registration() *libgin.ControllerRegistration {
+func (inst *SchemaController) Registration() *libgin.ControllerRegistration {
 	return &libgin.ControllerRegistration{
 		Route: inst.route,
 	}
 }
 
-func (inst *NamespaceController) route(g *gin.RouterGroup) error {
+func (inst *SchemaController) route(g *gin.RouterGroup) error {
 
-	g = makeGroupFor(g, "namespaces")
+	g = makeGroupFor(g, "schemata")
 
 	// g.POST("", inst.handle)
 	// g.DELETE(":id", inst.handle)
@@ -45,8 +45,8 @@ func (inst *NamespaceController) route(g *gin.RouterGroup) error {
 	return nil
 }
 
-func (inst *NamespaceController) handle(c *gin.Context) {
-	task := &myNamespaceTask{
+func (inst *SchemaController) handle(c *gin.Context) {
+	task := &mySchemaTask{
 		context:         c,
 		parent:          inst,
 		wantRequestID:   false,
@@ -55,8 +55,8 @@ func (inst *NamespaceController) handle(c *gin.Context) {
 	task.exec(task.doAction)
 }
 
-func (inst *NamespaceController) handleGetList(c *gin.Context) {
-	task := &myNamespaceTask{
+func (inst *SchemaController) handleGetList(c *gin.Context) {
+	task := &mySchemaTask{
 		context:         c,
 		parent:          inst,
 		wantRequestID:   false,
@@ -65,8 +65,8 @@ func (inst *NamespaceController) handleGetList(c *gin.Context) {
 	task.exec(task.doGetList)
 }
 
-func (inst *NamespaceController) handleGetOne(c *gin.Context) {
-	task := &myNamespaceTask{
+func (inst *SchemaController) handleGetOne(c *gin.Context) {
+	task := &mySchemaTask{
 		context:         c,
 		parent:          inst,
 		wantRequestID:   false,
@@ -77,18 +77,18 @@ func (inst *NamespaceController) handleGetOne(c *gin.Context) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-type myNamespaceTask struct {
+type mySchemaTask struct {
 	context *gin.Context
-	parent  *NamespaceController
+	parent  *SchemaController
 
 	wantRequestID   bool
 	wantRequestBody bool
 
-	body1 vo.Namespaces
-	body2 vo.Namespaces
+	body1 vo.Schema
+	body2 vo.Schema
 }
 
-func (inst *myNamespaceTask) open() error {
+func (inst *mySchemaTask) open() error {
 
 	c := inst.context
 
@@ -102,7 +102,7 @@ func (inst *myNamespaceTask) open() error {
 	return nil
 }
 
-func (inst *myNamespaceTask) send(err error) {
+func (inst *mySchemaTask) send(err error) {
 	c := inst.context
 	d := &inst.body2
 	s := inst.body2.Status
@@ -115,7 +115,7 @@ func (inst *myNamespaceTask) send(err error) {
 	inst.parent.Responder.Send(r)
 }
 
-func (inst *myNamespaceTask) exec(fn func() error) {
+func (inst *mySchemaTask) exec(fn func() error) {
 	err := inst.open()
 	if err == nil {
 		err = fn()
@@ -123,41 +123,50 @@ func (inst *myNamespaceTask) exec(fn func() error) {
 	inst.send(err)
 }
 
-func (inst *myNamespaceTask) doAction() error {
+func (inst *mySchemaTask) doAction() error {
 	return nil
 }
 
-func (inst *myNamespaceTask) doGetList() error {
+func (inst *mySchemaTask) doGetList() error {
 
-	list := inst.body2.Namespaces
+	schema := &inst.body2.Schema
+	nslist := inst.body2.Namespaces
+	ns := &dto.Namespace{}
+	api := &dto.API{}
 
-	ns1 := &dto.Namespace{}
-	list = append(list, ns1)
+	schema.URL = "(url of this doc)"
 
-	ns2 := &dto.Namespace{}
-	list = append(list, ns2)
+	ns.Types = append(ns.Types, "xxx")
+	ns.Types = append(ns.Types, "yyy")
+	ns.Types = append(ns.Types, "zzz")
 
-	ns3 := &dto.Namespace{}
-	list = append(list, ns3)
+	ns.APIs = append(ns.APIs, api)
+	ns.APIs = append(ns.APIs, api)
 
-	inst.body2.Namespaces = list
+	api.Params = append(api.Params, "a")
+	api.Params = append(api.Params, "b")
+	api.Params = append(api.Params, "c")
+
+	nslist = append(nslist, ns)
+	inst.body2.Namespaces = nslist
 	return nil
 }
 
-func (inst *myNamespaceTask) doGetOne() error {
+func (inst *mySchemaTask) doGetOne() error {
 
-	ns1 := &dto.Namespace{}
-	api1 := &dto.API{}
+	// 	ns1 := &dto.Schema{}
+	// 	api1 := &dto.API{}
 
-	ns1.APIs = make([]*dto.API, 0)
-	ns1.Types = []string{"a", "b", "c", "d"}
-	ns1.APIs = append(ns1.APIs, api1)
+	// 	ns1.APIs = make([]*dto.API, 0)
+	// 	ns1.Types = []string{"a", "b", "c", "d"}
+	// 	ns1.APIs = append(ns1.APIs, api1)
 
-	api1.Path = "/a/b/c"
+	// 	api1.Path = "/a/b/c"
 
-	list := inst.body2.Namespaces
-	list = append(list, ns1)
-	inst.body2.Namespaces = list
+	// 	list := inst.body2.Schema
+	// 	list = append(list, ns1)
+	// 	inst.body2.Schema = list
+
 	return nil
 }
 

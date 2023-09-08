@@ -9,10 +9,10 @@ type Service struct {
 	Base
 
 	Name        string `json:"name"`
-	Namespace   string `json:"namespace"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
-	Protocol    string `json:"protocol"`
+	Schema      string `json:"schema"`   // API 方案 URL
+	Protocol    string `json:"protocol"` // 服务协议名称（例如：https）
 	Host        string `json:"host"`
 	Port        int    `json:"port"`
 }

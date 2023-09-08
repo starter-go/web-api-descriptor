@@ -93,6 +93,50 @@ func (inst*pe8d8413902_controllers_NamespaceController) getResponder(ie applicat
 
 
 
+// type pe8d841390.SchemaController in package:github.com/bitwormhole/web-api-descriptor/app/web/controllers
+//
+// id:com-e8d84139021d4b21-controllers-SchemaController
+// class:class-d1a916a203352fd5d33eabc36896b42e-Controller
+// alias:
+// scope:singleton
+//
+type pe8d8413902_controllers_SchemaController struct {
+}
+
+func (inst* pe8d8413902_controllers_SchemaController) register(cr application.ComponentRegistry) error {
+	r := cr.NewRegistration()
+	r.ID = "com-e8d84139021d4b21-controllers-SchemaController"
+	r.Classes = "class-d1a916a203352fd5d33eabc36896b42e-Controller"
+	r.Aliases = ""
+	r.Scope = "singleton"
+	r.NewFunc = inst.new
+	r.InjectFunc = inst.inject
+	return r.Commit()
+}
+
+func (inst* pe8d8413902_controllers_SchemaController) new() any {
+    return &pe8d841390.SchemaController{}
+}
+
+func (inst* pe8d8413902_controllers_SchemaController) inject(injext application.InjectionExt, instance any) error {
+	ie := injext
+	com := instance.(*pe8d841390.SchemaController)
+	nop(ie, com)
+
+	
+    com.Responder = inst.getResponder(ie)
+
+
+    return nil
+}
+
+
+func (inst*pe8d8413902_controllers_SchemaController) getResponder(ie application.InjectionExt)pd1a916a20.Responder{
+    return ie.GetComponent("#alias-d1a916a203352fd5d33eabc36896b42e-Responder").(pd1a916a20.Responder)
+}
+
+
+
 // type pe8d841390.ServiceController in package:github.com/bitwormhole/web-api-descriptor/app/web/controllers
 //
 // id:com-e8d84139021d4b21-controllers-ServiceController

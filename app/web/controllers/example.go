@@ -31,7 +31,7 @@ func (inst *ExampleController) Registration() *libgin.ControllerRegistration {
 
 func (inst *ExampleController) route(g *gin.RouterGroup) error {
 
-	g = g.Group("example-ppser")
+	g = makeGroupFor(g, "example-ppser")
 
 	g.POST("", inst.handle)
 	g.DELETE(":id", inst.handle)
