@@ -4,16 +4,16 @@ import (
 	"embed"
 
 	"github.com/starter-go/application"
-	"github.com/starter-go/libgin/modulegin"
-	modulesecuritygingorm "github.com/starter-go/module-security-gin-gorm"
+	"github.com/starter-go/libgin/modules/libgin"
+	"github.com/starter-go/security-gin-gorm/modules/securitygingorm"
 
 	"github.com/bitwormhole/web-api-descriptor/gen/gen4webapid"
 )
 
 const (
 	theModuleName     = "github.com/bitwormhole/web-api-descriptor"
-	theModuleVersion  = "v0.0.0"
-	theModuleRevision = 0
+	theModuleVersion  = "v0.0.1"
+	theModuleRevision = 1
 	theModuleResPath  = "src/main/resources"
 )
 
@@ -30,7 +30,7 @@ func Module() application.Module {
 	mb.EmbedResources(theModuleResFS, theModuleResPath)
 	mb.Components(gen4webapid.ExportComForWebAPIDesc)
 
-	mb.Depend(modulegin.Module())
-	mb.Depend(modulesecuritygingorm.Module())
+	mb.Depend(libgin.Module())
+	mb.Depend(securitygingorm.Module())
 	return mb.Create()
 }

@@ -30,9 +30,9 @@ func (inst *SchemaController) Registration() *libgin.ControllerRegistration {
 	}
 }
 
-func (inst *SchemaController) route(g *gin.RouterGroup) error {
+func (inst *SchemaController) route(g libgin.RouterProxy) error {
 
-	g = makeGroupFor(g, "schemata")
+	g = g.For("schemata")
 
 	// g.POST("", inst.handle)
 	// g.DELETE(":id", inst.handle)

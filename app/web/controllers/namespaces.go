@@ -30,9 +30,9 @@ func (inst *NamespaceController) Registration() *libgin.ControllerRegistration {
 	}
 }
 
-func (inst *NamespaceController) route(g *gin.RouterGroup) error {
+func (inst *NamespaceController) route(g libgin.RouterProxy) error {
 
-	g = makeGroupFor(g, "namespaces")
+	g = g.For("namespaces")
 
 	// g.POST("", inst.handle)
 	// g.DELETE(":id", inst.handle)

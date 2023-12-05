@@ -30,9 +30,9 @@ func (inst *ServiceController) Registration() *libgin.ControllerRegistration {
 	}
 }
 
-func (inst *ServiceController) route(g *gin.RouterGroup) error {
+func (inst *ServiceController) route(g libgin.RouterProxy) error {
 
-	g = makeGroupFor(g, "services")
+	g = g.For("services")
 
 	// g.POST("", inst.handle)
 	// g.DELETE(":id", inst.handle)
@@ -41,6 +41,8 @@ func (inst *ServiceController) route(g *gin.RouterGroup) error {
 	// g.GET("", inst.handle)
 
 	g.GET("", inst.handleGetList)
+
+	g.GET("/index.json", inst.handleGetList)
 
 	return nil
 }

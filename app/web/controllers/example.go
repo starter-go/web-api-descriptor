@@ -29,9 +29,9 @@ func (inst *ExampleController) Registration() *libgin.ControllerRegistration {
 	}
 }
 
-func (inst *ExampleController) route(g *gin.RouterGroup) error {
+func (inst *ExampleController) route(g libgin.RouterProxy) error {
 
-	g = makeGroupFor(g, "example-ppser")
+	g = g.For("example-ppser")
 
 	g.POST("", inst.handle)
 	g.DELETE(":id", inst.handle)
